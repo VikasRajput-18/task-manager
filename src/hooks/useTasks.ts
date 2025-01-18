@@ -1,12 +1,13 @@
-import { useState, useEffect } from 'react';
-import { Task, TaskPriority } from '../types/task';
+import React from "react";
+import { useState, useEffect } from "react";
+import { Task, TaskPriority } from "../types/task";
 
-export type SortBy = 'date' | 'priority' | 'custom';
-export type FilterStatus = 'all' | 'completed' | 'incomplete';
+export type SortBy = "date" | "priority" | "custom";
+export type FilterStatus = "all" | "completed" | "incomplete";
 
 export function useTasks() {
   const [tasks, setTasks] = useState<Task[]>(() => {
-    const saved = localStorage.getItem('tasks');
+    const saved = localStorage.getItem("tasks");
     if (saved) {
       return JSON.parse(saved).map((task: Task) => ({
         ...task,
@@ -16,14 +17,18 @@ export function useTasks() {
     return [];
   });
 
-  const [sortBy, setSortBy] = useState<SortBy>('date');
-  const [filterStatus, setFilterStatus] = useState<FilterStatus>('all');
+  const [sortBy, setSortBy] = useState<SortBy>("date");
+  const [filterStatus, setFilterStatus] = useState<FilterStatus>("all");
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem("tasks", JSON.stringify(tasks));
   }, [tasks]);
 
-  const addTask = (title: string, description: string, priority: TaskPriority) => {
+  const addTask = (
+    title: string,
+    description: string,
+    priority: TaskPriority
+  ) => {
     const newTask: Task = {
       id: crypto.randomUUID(),
       title,
@@ -35,12 +40,15 @@ export function useTasks() {
     setTasks((prev) => [...prev, newTask]);
   };
 
-  const updateTask = (id: string, title: string, description: string, priority: TaskPriority) => {
+  const updateTask = (
+    id: string,
+    title: string,
+    description: string,
+    priority: TaskPriority
+  ) => {
     setTasks((prev) =>
       prev.map((task) =>
-        task.id === id
-          ? { ...task, title, description, priority }
-          : task
+        task.id === id ? { ...task, title, description, priority } : task
       )
     );
   };
@@ -64,18 +72,18 @@ export function useTasks() {
       result.splice(endIndex, 0, removed);
       return result;
     });
-    setSortBy('custom');
+    setSortBy("custom");
   };
 
   const filteredAndSortedTasks = tasks
     .filter((task) => {
-      if (filterStatus === 'completed') return task.completed;
-      if (filterStatus === 'incomplete') return !task.completed;
+      if (filterStatus === "completed") return task.completed;
+      if (filterStatus === "incomplete") return !task.completed;
       return true;
     })
     .sort((a, b) => {
-      if (sortBy === 'custom') return 0;
-      if (sortBy === 'date') {
+      if (sortBy === "custom") return 0;
+      if (sortBy === "date") {
         return b.createdAt.getTime() - a.createdAt.getTime();
       }
       const priorityOrder = { high: 3, medium: 2, low: 1 };
