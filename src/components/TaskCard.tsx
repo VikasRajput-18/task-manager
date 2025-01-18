@@ -62,7 +62,10 @@ export function TaskCard({
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-3">
           <button
-            onClick={() => onToggleComplete(task.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onToggleComplete(task.id);
+            }}
             className="mt-1 focus:outline-none"
           >
             {task.completed ? (
@@ -104,14 +107,20 @@ export function TaskCard({
         </div>
         <div className="flex space-x-2">
           <button
-            onClick={() => setIsEditing(true)}
+            onClick={(e) => {
+              e.stopPropagation();
+              setIsEditing(true);
+            }}
             className="text-gray-400 hover:text-blue-500 focus:outline-none"
           >
             <Pencil className="w-5 h-5" />
           </button>
           <button
             name="delete"
-            onClick={() => onDelete(task.id)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(task.id);
+            }}
             className="text-gray-400 hover:text-red-500 focus:outline-none"
           >
             <svg

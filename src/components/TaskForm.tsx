@@ -38,6 +38,9 @@ export function TaskForm({ onSubmit, initialTask, onCancel }: TaskFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
+      onClick={(e)=> 
+        e.stopPropagation()
+    }
       className="space-y-4 bg-white p-6 rounded-lg shadow-sm"
     >
       <div>
