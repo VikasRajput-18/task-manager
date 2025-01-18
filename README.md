@@ -29,7 +29,7 @@ To set up and run this project locally:
 
 1. **Clone the Repository:**
    ```bash
-   git clone <repository-url>
+   git clone [<repository-url>](https://github.com/VikasRajput-18/task-manager.git)
    cd task-management-app
    ```
 
